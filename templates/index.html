@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Flask Translator</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+</head>
+
+<body>
+    <div class="container">
+        <div class="wrapper">
+        <form method="POST" action="/">
+            <div class="text-input">
+            <textarea spellcheck="false" class="from-text" name="from_text" placeholder="Enter text">{{ request.form['from_text'] if request.method == 'POST' else '' }}</textarea>
+            <textarea spellcheck="false" readonly disabled class="to-text" placeholder="Translation">{{ translated_text }}</textarea>
+            </div>
+            <ul class="controls">
+                <li class="row from">
+                    <select name="translate_from">
+                    {% for code, language in countries.items() %}
+                        <option value="{{ code }}" {% if request.form['translate_from'] == code %}selected{% endif %}>{{ language }}</option>
+                    {% endfor %}
+                    </select>
+                </li>
+                <li class="exchange"><i class="fas fa-exchange-alt"></i></li>
+                <li class="row to">
+                    <select name="translate_to">
+                    {% for code, language in countries.items() %}
+                        <option value="{{ code }}" {% if request.form['translate_to'] == code %}selected{% endif %}>{{ language }}</option>
+                    {% endfor %}
+                    </select>
+                </li>
+            </ul>
+            <button type="submit">Translate</button>
+        </form>
+        </div>
+    </div>
+</body>
+</html>
